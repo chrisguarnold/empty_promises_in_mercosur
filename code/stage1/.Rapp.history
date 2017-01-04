@@ -1,0 +1,773 @@
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files')
+load(file = "data/eha_data.Rdata")
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files')
+load(file = "data/eha_data.Rdata")
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+heimspiel.sum <- summary(datlong$heimspiel)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+heimspiel.sd <- sd(datlong$heimspiel)#
+heimspiel.smry <- correct.order(heimspiel.sd, heimspiel.sum)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+dat.sub <- subset(dat, (dat$needsincarg == 1 | dat$needsincbra == 1 | dat$needsincpar == 1 | dat$needsincuru == 1))
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+heimspiel.smry
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+as.matrix(prom.smry, all.vp.smry, gmera.smry#
+	,heimspiel.smry)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+prom.smry
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+rbind(prom.smry, all.vp.smry, gmera.smry,heimspiel.smry)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+stargazer(rbind(prom.smry, all.vp.smry, gmera.smry,heimspiel.smry))
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+### Complexity#
+compl.sum <- summary(dat.sub$complexity.pc)#
+compl.sd <- sd(dat.sub$complexity.pc)#
+compl.smry <- correct.order(compl.sd, compl.sum)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+compl.smry
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+annex.sum <- summary(dat.sub$annex)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+annex.sd <- sd(dat.sub$annex)#
+annex.smry <- correct.order(annex.sd, annex.sum)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+annex.sd
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+annex.sum
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+dat.sub$annex
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+as.numeric(dat.sub$annex)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+annex.sum <- summary(as.numeric(dat.sub$annex))#
+annex.sd <- sd(dat.sub$annex)#
+annex.smry <- correct.order(annex.sd, annex.sum)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+annex.smry
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+dat.sub$derrogates
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+### Overruling existing policies#
+# Saved in the date when it overrules. Create dummy:#
+dat.sub$d.derrogates <- rep(0, length(dat.sub$derrogates))#
+dat.sub$d.derrogates[dat.sub$derrogates != 0] <- 1#
+overrule.sum <- summary(dat.sub$d.derrogates)#
+overrule.sd <- sd(dat.sub$d.derrogates)#
+overrule.smry <- correct.order(overrule.sum, overrule.sd)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+overrule.smry
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+overrule.sum
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+overrule.smry <- correct.order(overrule.sd, overrule.sum)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+overrule.smry
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+res.mat <- rbind(prom.smry, all.vp.smry, gmera.smry,heimspiel.smry, compl.smry, annex.smry, overrule.smry)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+res.mat
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+rownames(res.mat) <- c("Political Context"#
+                     ,"Mercosur Support"#
+                     ,"Veto Players"#
+                     ,"Conflict Level"#
+                     ,"Meeting in the Own Country"#
+                     ,"Policies"#
+                     ,"Complexity of Policy Annex"#
+                     ,"Overrules Existing Policy")
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+rownames(res.mat) <- c("Mercosur Support"#
+                     ,"Veto Players"#
+                     ,"Conflict Level"#
+                     ,"Meeting in the Own Country"#
+                     ,"Complexity of Policy Annex"#
+                     ,"Overrules Existing Policy")
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+rownames(res.mat) <- c("Mercosur Support"#
+                     ,"Veto Players"#
+                     ,"Conflict Level"#
+                     ,"Meeting in the Own Country"#
+                     ,"Complexity of Policy Annex"#
+                     ,"Annex"#
+                     ,"Overrules Existing Policy")
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+res.mat
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+stargazer(res.mat)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+stargazer(res.mat, round = 2)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+stargazer(res.mat, digits = 2)
+help("stargazer")
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+stargazer(res.mat#
+          , out = "descr2.tex"#
+          , digits = 2#
+          , title = "Descriptive statistics for variables measuring the political context and attributes of the regulations.")
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+res.mat <- rbind(prom.smry, all.vp.smry, gmera.smry,heimspiel.smry, compl.smry, annex.smry, overrule.smry)#
+rownames(res.mat) <- c("Mercosur Support"#
+                     ,"Veto Players"#
+                     ,"Conflict Level"#
+                     ,"Meeting in the Own Country"#
+                     ,"Complexity of Policy Annex"#
+                     ,"Annex"#
+                     ,"Overrules Existing Policy")#
+columnlabels <- rownames(res.mat)#
+stargazer(res.mat#
+          , out = "descr2.tex"#
+          , digits = 2, column.labels = columnlabels#
+          , title = "Descriptive statistics for variables measuring the political context and attributes of the regulations.")
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+rownames(res.mat) <- c("Mercosur Support"#
+                     ,"Veto Players"#
+                     ,"Conflict Level"#
+                     ,"Meeting in the Own Country"#
+                     ,"Complexity of Policy Annex"#
+                     ,"Annex"#
+                     ,"Overrules Existing Policy")#
+rowlabels <- rownames(res.mat)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+stargazer(res.mat#
+          , out = "descr2.tex"#
+          , digits = 2, rownames = rowlabels#
+          , title = "Descriptive statistics for variables measuring the political context and attributes of the regulations.")
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+stargazer(res.mat#
+          , out = "descr2.tex"#
+          , digits = 2, rownames = 1#
+          , title = "Descriptive statistics for variables measuring the political context and attributes of the regulations.")
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+stargazer(res.mat#
+          , out = "descr2.tex"#
+          , digits = 2, rownames = TRUE#
+          , title = "Descriptive statistics for variables measuring the political context and attributes of the regulations.")
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+stargazer(res.mat#
+          , out = "descr2.tex", summary=FALSE#
+          , digits = 2, rownames = TRUE#
+          , title = "Descriptive statistics for variables measuring the political context and attributes of the regulations.")
+help("stargazer")
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+stargazer(res.mat#
+          , out = "descr2.tex", summary=FALSE, style = "io"#
+          , digits = 2, rownames = TRUE#
+          , title = "Descriptive statistics for variables measuring the political context and attributes of the regulations.")
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+stargazer(res.mat#
+          , out = "descr2.tex", summary=FALSE, style = "aer"#
+          , digits = 2, rownames = TRUE#
+          , title = "Descriptive statistics for variables measuring the political context and attributes of the regulations.")
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+stargazer(res.mat#
+          , out = "descr2.tex", summary=FALSE, style = "ajps"#
+          , digits = 2, rownames = TRUE#
+          , title = "Descriptive statistics for variables measuring the political context and attributes of the regulations.")
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+dat.sub <- subset(dat, (dat$needsincarg == 1 | dat$needsincbra == 1 | dat$needsincpar == 1 | dat$needsincuru == 1))
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+names(dat.sub)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+sum(dat.sub$needsincarg)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+sum(dat.sub$needsincbra)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+sum(dat.sub$needsincpar)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+sum(dat.sub$needsincuru)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+str(datlong)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+table(datlong$arg)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+table(datlong$bra)#
+table(datlong$par)#
+table(datlong$uru)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+str(datlong)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+cmc <- table(datlong$cdc)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+cmc
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+cmc <- table(datlong$cmc)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+cmc
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+table(datlong$pol.dim.type6)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+cmc.d <- table(datlong$cmc)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+data.table1 <- c(cmc.d, a, b, p, u, poltype)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+poltype <- table(datlong$pol.dim.type6)#
+data.table1 <- c(cmc.d, a, b, p, u, poltype)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+data.table1
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+a
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+table(datlong$arg)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+table(datlong$arg)[2]
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+a <- table(datlong$arg)[2]
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+a
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+cmc.d <- table(datlong$cmc)#
+cmc.1 <- table(datlong$cmc)[2]#
+cmc.0 <- table(datlong$cmc)[1]#
+#
+a <- table(datlong$arg)[2]#
+b <- table(datlong$bra)[2]#
+p <- table(datlong$par)[2]#
+u <- table(datlong$uru)[2]#
+poltype <- table(datlong$pol.dim.type6)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+u
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+data.table1 <- c(cmc.d, a, b, p, u, poltype)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+data.table1
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+stargazer(data.table1)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+str.table <- c("CMC"#
+			,"CMG and TC"#
+			,"Argentina"#
+			,"Brazil"#
+			,"Paraguay"#
+			,"Uruguay" #
+			,"Common External Tariff"#
+			,"Governmental Cooperation"#
+			,"Mercosur Interna"#
+			,"Internal Market"#
+			,"Tariff Exception"#
+			,"Technical Regulations"#
+			,"Others")
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+cbind(str.table, data.table1)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+table1 <- cbind(str.table, data.table1)#
+#
+stargazer(table1)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+stargazer(table1, out = "descr1.tex", summary=FALSE#
+  , digits = 2, rownames = FALSE#
+  , title = "Descriptive statistics for three categorial variables.")#
+)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage1')
+dat.ni2 <- subset(dat, dat$needsinc == TRUE)#
+dat.ni <- data.frame(#
+dat.ni2$pol.dim.type6#
+,dat.ni2$confl.level#
+,dat.ni2$complexity.pc#
+,dat.ni2$annex#
+,dat.ni2$lawpmeet#
+,dat.ni2$d.derrogates#
+,dat.ni2$preamble#
+,dat.ni2$decountry#
+,dat.ni2$cmc#
+,dat.ni2$gmc#
+,dat.ni2$tc#
+)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage1')
+names(dat.ni) <- c('pol.dim.type6'#
+					,'confl.level'#
+      				,'complexity.pc'#
+      				,'annex'#
+      				,'lawpmeet'#
+					,'dderrogates'#
+      				,'preamble'#
+      				,'decountry'#
+					,'cmc'#
+      				,'gmc'#
+      				,'tc')#
+#
+dat.ni$govcoop <- rep(0, length(dat.ni[,1]))#
+dat.ni$govcoop[dat.ni$pol.dim.type6 == 'gov_coop'] <- 1#
+#
+dat.ni$annex <- car::recode(dat.ni$annex, "TRUE = '1'; FALSE = '0'")
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage1')
+# a) Contracting is a signal for continuous cooperation.#
+# When is it good for signalling?#
+log.confl.m1 <- zelig(govcoop ~ #
+		confl.level#
+		+ gmc + tc				#
+		# Controls		#
+		+ complexity.pc#
+		+ annex#
+		+ dderrogates#
+		+ lawpmeet#
+		+ as.factor(decountry)		#
+		, model = "logit"#
+		, data = dat.ni#
+)#
+log.confl.m1.glm <- glm(govcoop ~ #
+		confl.level#
+		+ gmc + tc				#
+		# Controls		#
+		+ complexity.pc#
+		+ annex#
+		+ dderrogates#
+		+ lawpmeet#
+		+ as.factor(decountry)		#
+		, family = binomial#
+		, data = dat.ni#
+)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage1')
+log.confl.m1.glm
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files')
+library(Zelig)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage1')
+# a) Contracting is a signal for continuous cooperation.#
+# When is it good for signalling?#
+log.confl.m1 <- zelig(govcoop ~ #
+		confl.level#
+		+ gmc + tc				#
+		# Controls		#
+		+ complexity.pc#
+		+ annex#
+		+ dderrogates#
+		+ lawpmeet#
+		+ as.factor(decountry)		#
+		, model = "logit"#
+		, data = dat.ni#
+)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage1')
+summary(log.confl.m1)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage1')
+# a) Contracting is a signal for continuous cooperation.#
+# When is it good for signalling?#
+log.confl.m1 <- zelig(govcoop ~ #
+		confl.level#
+		+ gmc + tc				#
+		# Controls		#
+		+ complexity.pc#
+		+ annex#
+		+ dderrogates#
+		#+ lawpmeet#
+		+ as.factor(decountry)		#
+		, model = "logit"#
+		, data = dat.ni#
+)#
+#
+summary(log.confl.m1)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage1')
+# a) Contracting is a signal for continuous cooperation.#
+# When is it good for signalling?#
+log.confl.m1 <- zelig(govcoop ~ #
+		confl.level#
+		+ gmc + tc				#
+		# Controls		#
+		+ complexity.pc#
+		+ annex#
+		+ dderrogates#
+		#+ lawpmeet#
+		+ as.factor(decountry)		#
+		, model = "logit"#
+		, data = dat.ni#
+)#
+#
+summary(log.confl.m1)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage1')
+stargazer(log.confl.m1.glm)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+# =================#
+# = Table 1: Descriptive statistics for three categorial variables.#
+# ===========#
+str(datlong)#
+cmc.d <- table(datlong$cmc)#
+cmc.1 <- table(datlong$cmc)[2]#
+cmc.0 <- table(datlong$cmc)[1]#
+#
+a <- table(datlong$arg)[2]#
+b <- table(datlong$bra)[2]#
+p <- table(datlong$par)[2]#
+u <- table(datlong$uru)[2]#
+poltype <- table(datlong$pol.dim.type6)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+data.table1 <- c(cmc.d, a, b, p, u, poltype)
+names(data.table1)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+names(data.table1)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+data.table1
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+poltype
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+poltype[5]+poltype[6]
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files')
+###########################################################
+# MASTER                                                ###
+#                                                       ###
+# "Empty Promises and Non-Incorporation in Mercosur"    ###
+# International Interactions                            ###
+# Chris Arnold                                          ###
+# May 2016                                              ###
+###########################################################
+# All the implementation was done with Zelig 3.x and R 2.14#
+# As of July 2013, Zelig 4 had no implementation for survival models, yet#
+# ============#
+# = Packages =#
+# ============#
+#
+library(survival)#
+library(Zelig)#
+library(lattice)#
+library(dummies)#
+library(MASS)#
+#
+library(stargazer)#
+#
+# ============#
+# = Data =#
+# ============#
+#
+load("data/master.Rdata")#
+#
+# without imputation#
+load(file = "data/eha_data.Rdata")#
+#
+## with imputation#
+#load("data/eha_data1.Rdata")#
+#load("data/eha_data2.Rdata")#
+#load("data/eha_data3.Rdata")#
+#load("data/eha_data4.Rdata")#
+#load("data/eha_data5.Rdata")#
+##
+## Governmental Cooperation#
+#dl1.gc <- subset(datlong1, datlong1$pol.dim.type6.gov_coop == TRUE)#
+#dl2.gc <- subset(datlong2, datlong2$pol.dim.type6.gov_coop == TRUE)#
+#dl3.gc <- subset(datlong3, datlong3$pol.dim.type6.gov_coop == TRUE)#
+#dl4.gc <- subset(datlong4, datlong4$pol.dim.type6.gov_coop == TRUE)#
+#dl5.gc <- subset(datlong5, datlong5$pol.dim.type6.gov_coop == TRUE)#
+##
+## Governmental Cooperation#
+#dl1.ngc <- subset(datlong1, datlong1$pol.dim.type6.gov_coop == FALSE)#
+#dl2.ngc <- subset(datlong2, datlong2$pol.dim.type6.gov_coop == FALSE)#
+#dl3.ngc <- subset(datlong3, datlong3$pol.dim.type6.gov_coop == FALSE)#
+#dl4.ngc <- subset(datlong4, datlong4$pol.dim.type6.gov_coop == FALSE)#
+#dl5.ngc <- subset(datlong5, datlong5$pol.dim.type6.gov_coop == FALSE)#
+##
+##
+## Tariff Exception#
+#dl1.te <- subset(datlong1, datlong1$pol.dim.type6.tariff_exception == TRUE)#
+#dl2.te <- subset(datlong2, datlong2$pol.dim.type6.tariff_exception == TRUE)#
+#dl3.te <- subset(datlong3, datlong3$pol.dim.type6.tariff_exception == TRUE)#
+#dl4.te <- subset(datlong4, datlong4$pol.dim.type6.tariff_exception == TRUE)#
+#dl5.te <- subset(datlong5, datlong5$pol.dim.type6.tariff_exception == TRUE)#
+##
+# Define Oxford Colours#
+# define oxford colors#
+oxblue 			<- rgb(0,33,71,maxColorValue = 255)#
+oxlightblue 	<- rgb(161,196,208,maxColorValue = 255)#
+oxorange 		<- rgb(207,122,48,maxColorValue = 255)#
+oxyellow 		<- rgb(245,207,71,maxColorValue = 255)#
+oxdarkgreen 	<- rgb(105,145,59,maxColorValue = 255)#
+oxlightgreen 	<- rgb(170, 179,0,maxColorValue = 255)#
+oxred 			<- rgb(135,36,52,maxColorValue = 255)#
+oxgrey 			<- "grey65"#
+# Functions for quantiles#
+low <- function(x){#
+	quantile(x, .025, na.rm = TRUE)#
+}#
+high <- function(x){#
+	quantile(x, .975, na.rm = TRUE)#
+}#
+## Function to add shades on a plot for the uncertainty#
+#add.shade <- function(data, ruler, shadecol){#
+#	# calculate the vector with expected values#
+#	val.high <- apply(data$qi$ev, 2, high)#
+#	val.mean <- apply(data$qi$ev, 2, mean)#
+#	val.low <-  apply(data$qi$ev, 2, low)#
+#	# draws the background#
+#	for (i in 1:length(ruler-1)){#
+#	polygon(c(i, i+1, i+1, i) # these are the x values#
+#		, c(val.low[i], val.low[i+1], val.high[i+1], val.high[i]) # these are the ys#
+#		, col = shadecol#
+#		, border = shadecol)#
+#	}#
+#	#	lines(val.high, col = 'grey60', lwd = 3)#
+#	lines(val.mean, col = 'white' , lwd = 3)	#
+#	#	lines(val.low, col = 'grey60' , lwd = 3)#
+#}#
+##
+## Function to add shades on a plot for the uncertainty in fd#
+#add.shade.fd <- function(data, ruler, shadecol){#
+#	# calculate the vector with expected values#
+#	val.high <- apply(data$qi$fd, 2, high)#
+#	val.mean <- apply(data$qi$fd, 2, mean)#
+#	val.low <-  apply(data$qi$fd, 2, low)#
+#	# draws the background#
+#	for (i in 1:length(ruler-1)){#
+#	polygon(c(i, i+1, i+1, i) # these are the x values#
+#		, c(val.low[i], val.low[i+1], val.high[i+1], val.high[i]) # these are the ys#
+#		, col = shadecol#
+#		, border = shadecol)#
+#	}#
+#	#	lines(val.high, col = 'grey60', lwd = 3)#
+#	lines(val.mean, col = 'white' , lwd = 3)	#
+#	#	lines(val.low, col = 'grey60' , lwd = 3)#
+#}#
+##
+# Structure of Project#
+# Stage 1#
+# 	Create Data#
+# 	Analyse Data#
+#	Postpredictions and Graphs#
+# Stage 2#
+# 	Create Data#
+# 	Analyse Data#
+#	Postpredictions and Graphs
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+str(datlong)#
+cmc.d <- table(datlong$cmc)#
+cmc.1 <- table(datlong$cmc)[2]#
+cmc.0 <- table(datlong$cmc)[1]#
+#
+a <- table(datlong$arg)[2]#
+b <- table(datlong$bra)[2]#
+p <- table(datlong$par)[2]#
+u <- table(datlong$uru)[2]#
+poltype <- table(datlong$pol.dim.type6)#
+#
+data.table1 <- c(cmc.d, a, b, p, u, poltype)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+c(poltype[5+poltype[6], poltype[1], poltype[2], poltype[3], poltype[4], poltype[7]#
+, poltype[8])
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+c(poltype[5]+poltype[6], poltype[1], poltype[2], poltype[3], poltype[4], poltype[7]#
+, poltype[8])
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+poltype
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+poltype.table <- c(poltype[5]+poltype[6], poltype[1], poltype[2], poltype[3], poltype[4], poltype[7]#
+, poltype[8])
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+sum(poltype.table)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+poltype.table
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+poltype.table <- c(poltype[5]+poltype[6], poltype[1], poltype[2], poltype[3], poltype[4], poltype[7])#
+#
+sum(poltype.table)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+poltype <- table(datlong$pol.dim.type6)#
+#
+poltype.2 <- c(poltype[5]+poltype[6], poltype[1], poltype[2], poltype[3], poltype[4], poltype[7])#
+#
+poltype.table <- c(poltype.2, , 3550 - sum(poltype.2))
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+poltype.table <- c(poltype.2, 3550 - sum(poltype.2))
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+poltype.table
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+poltype <- table(datlong$pol.dim.type6)#
+#
+poltype.2 <- c(poltype[5]+poltype[6], poltype[1], poltype[2], poltype[3], poltype[4], poltype[7])#
+#
+poltype.table <- c(poltype.2, 3560 - sum(poltype.2))#
+#
+data.table1 <- c(cmc.d, a, b, p, u, poltype.table)#
+str.table <- c("CMC"#
+			,"CMG and TC"#
+			,"Argentina"#
+			,"Brazil"#
+			,"Paraguay"#
+			,"Uruguay" #
+			,"Common External Tariff"#
+			,"Governmental Cooperation"#
+			,"Mercosur Interna"#
+			,"Internal Market"#
+			,"Tariff Exception"#
+			,"Technical Regulations"#
+			,"Others")
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+table1 <- cbind(str.table, data.table1)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/figures')
+stargazer(table1, out = "descr1.tex", summary=FALSE#
+  , digits = 2, rownames = FALSE#
+  , title = "Descriptive statistics for three categorial variables."#
+)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage1')
+# ==============#
+# Assemble Data#
+#
+dat.ni2 <- subset(dat, dat$needsinc == TRUE)#
+dat.ni <- data.frame(#
+dat.ni2$pol.dim.type6#
+,dat.ni2$confl.level#
+,dat.ni2$complexity.pc#
+,dat.ni2$annex#
+,dat.ni2$lawpmeet#
+,dat.ni2$d.derrogates#
+,dat.ni2$preamble#
+,dat.ni2$decountry#
+,dat.ni2$cmc#
+,dat.ni2$gmc#
+,dat.ni2$tc#
+)#
+names(dat.ni) <- c('pol.dim.type6'#
+					,'confl.level'#
+      				,'complexity.pc'#
+      				,'annex'#
+      				,'lawpmeet'#
+					,'dderrogates'#
+      				,'preamble'#
+      				,'decountry'#
+					,'cmc'#
+      				,'gmc'#
+      				,'tc')
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage1')
+dat.ni$govcoop <- rep(0, length(dat.ni[,1]))#
+dat.ni$govcoop[dat.ni$pol.dim.type6 == 'gov_coop'] <- 1#
+#
+dat.ni$annex <- car::recode(dat.ni$annex, "TRUE = '1'; FALSE = '0'")
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage1')
+summary(log.confl.m1)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage1')
+# TODO: formatting the table#
+stargazer(log.confl.m1.glm, out = "OI1.tex", summary=FALSE#
+  , digits = 2, rownames = FALSE#
+  , title = "Estimation results from a logit model. The reference categories for the dummy variables are as follows. Countries: Argentina; Decision bodies: Common Market Council."#
+)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage1')
+stargazer(log.confl.m1.glm, out = "OI1.tex", summary=FALSE#
+  , digits = 2, rownames = TRUE#
+  , title = "Estimation results from a logit model. The reference categories for the dummy variables are as follows. Countries: Argentina; Decision bodies: Common Market Council."#
+)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage1')
+stargazer(log.confl.m1.glm, out = "OI1.tex"#, summary=FALSE#
+  , digits = 2#
+  , title = "Estimation results from a logit model. The reference categories for the dummy variables are as follows. Countries: Argentina; Decision bodies: Common Market Council."#
+)
+help(stargazer)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage1')
+# TODO: formatting the table#
+stargazer(log.confl.m1.glm, out = "OI1.tex"#, summary=FALSE#
+  , digits = 2#
+	, covariate.labels = c("Conflict Level","CMG","TC","Complexity","Annex","Overruling Existing Policy Policies"#
+	, "Adopted at the Meeting", "Brazil", "Paraguay","Uruguay")#
+  , title = "Estimation results from a logit model. The reference categories for the dummy variables are as follows. Countries: Argentina; Decision bodies: Common Market Council."#
+)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage1')
+# TODO: formatting the table#
+stargazer(log.confl.m1.glm, out = "OI1.tex"#, summary=FALSE#
+  , digits = 2, dep.var.caption =" "#
+	, covariate.labels = c("Conflict Level","CMG","TC","Complexity","Annex","Overruling Existing Policy Policies"#
+	, "Adopted at the Meeting", "Brazil", "Paraguay","Uruguay")#
+  , title = "Estimation results from a logit model. The reference categories for the dummy variables are as follows. Countries: Argentina; Decision bodies: Common Market Council."#
+)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage1')
+stargazer(log.confl.m1.glm, out = "OI1.tex"#, summary=FALSE#
+  , digits = 2, dep.var.labels.include =FALSE#
+	, covariate.labels = c("Conflict Level","CMG","TC","Complexity","Annex","Overruling Existing Policy Policies"#
+	, "Adopted at the Meeting", "Brazil", "Paraguay","Uruguay")#
+  , title = "Estimation results from a logit model. The reference categories for the dummy variables are as follows. Countries: Argentina; Decision bodies: Common Market Council."#
+)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage1')
+stargazer(log.confl.m1.glm, out = "OI1.tex"#, summary=FALSE#
+  , digits = 2, dep.var.labels.include =FALSE, style = "apsr"#
+	, covariate.labels = c("Conflict Level","CMG","TC","Complexity","Annex","Overruling Existing Policy Policies"#
+	, "Adopted at the Meeting", "Brazil", "Paraguay","Uruguay")#
+  , title = "Estimation results from a logit model. The reference categories for the dummy variables are as follows. Countries: Argentina; Decision bodies: Common Market Council."#
+)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage1')
+stargazer(log.confl.m1.glm, out = "OI1.tex"#, summary=FALSE#
+  , digits = 2, dep.var.labels.include =FALSE, style = "apsr", single.row = TRUE#
+	, covariate.labels = c("Conflict Level","CMG","TC","Complexity","Annex","Overruling Existing Policy Policies"#
+	, "Adopted at the Meeting", "Brazil", "Paraguay","Uruguay")#
+  , title = "Estimation results from a logit model. The reference categories for the dummy variables are as follows. Countries: Argentina; Decision bodies: Common Market Council."#
+)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage1')
+stargazer(log.confl.m1.glm, out = "OI1.tex"#, summary=FALSE#
+  , digits = 2, dep.var.labels.include =FALSE, style = "apsr", single.row = TRUE#
+	, align = TRUE#
+	, covariate.labels = c("Conflict Level","CMG","TC","Complexity","Annex","Overruling Existing Policy Policies"#
+	, "Adopted at the Meeting", "Brazil", "Paraguay","Uruguay")#
+  , title = "Estimation results from a logit model. The reference categories for the dummy variables are as follows. Countries: Argentina; Decision bodies: Common Market Council."#
+)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage1')
+stargazer(log.confl.m1.glm, out = "OI1.tex"#, summary=FALSE#
+  , digits = 2, dep.var.labels.include =FALSE, style = "apsr", single.row = FALSE#
+	, align = TRUE#
+	, covariate.labels = c("Conflict Level","CMG","TC","Complexity","Annex","Overruling Existing Policy Policies"#
+	, "Adopted at the Meeting", "Brazil", "Paraguay","Uruguay")#
+  , title = "Estimation results from a logit model. The reference categories for the dummy variables are as follows. Countries: Argentina; Decision bodies: Common Market Council."#
+)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage1')
+# a) Contracting is a signal for continuous cooperation.#
+# When is it good for signalling?#
+log.confl.m1 <- zelig(govcoop ~ #
+		confl.level#
+		+ gmc + tc				#
+		# Controls		#
+		+ complexity.pc#
+		+ annex#
+		+ dderrogates#
+		#+ lawpmeet#
+		+ as.factor(decountry)		#
+		, model = "logit"#
+		, data = dat.ni#
+)#
+################ #
+# 2.2 Reputation gains during contracting#
+# No Interaction#
+#################
+# Contracting is a signal for continuous cooperation.#
+#
+log.confl.m <- log.confl.m1#
+#log.confl.m <- log.confl.m2#
+#
+# Range of value to calculate postpreds#
+#confl <- seq(0.1,20,.1)#
+#
+### 1 General case#
+# simulate to integrate#
+#log.confl.x <- setx(log.confl.m, confl.level=confl)#
+#log.confl.s <- sim(log.confl.m, x=log.confl.x, num=50000 )#
+# First difference#
+log.confl.xl <- setx(log.confl.m, confl.level=0)#
+log.confl.xh <- setx(log.confl.m, confl.level=18.5)#
+log.confl.sfd <- sim(log.confl.m, x=log.confl.xl, x1=log.confl.xh, num = 1e5)#
+# plotting the overall#
+##
+#pdf("../figures/s1_confl.pdf", height = 5, width = 5)#
+#par(mar = c(3,5,.4,.4))#
+##
+#plot(1,1, type = "n"#
+#		, bty = "n"#
+#		, las = 1#
+#		, xlim = c(0,length(confl)) , ylim = c(0,.5)#
+#		, xaxt = "n" #, yaxt = "n"#
+#		, ylab = "Expected Probability "#
+#		, xlab = "Level of Conflict"#
+#		)#
+#axis(1, at = c(0,50,100,150,200), lab = c(0,5,10,15,20))#
+#add.shade(log.confl.s, confl, oxblue)#
+#dev.off()#
+##
+# plotting the first difference#
+all.h <- high(log.confl.sfd$qi$fd)#
+all.m <- mean(log.confl.sfd$qi$fd)#
+all.l <- low(log.confl.sfd$qi$fd)#
+pdf("s1_confl_fd.pdf", height = 5, width = 3)#
+par(mar = c(3,5,.4,.4))#
+#
+plot(1,1, type = "n"#
+		, bty = "n"#
+		, las = 1#
+		, xlim = c(0,2) , ylim = c(-.1,.5)#
+		, xaxt = "n" #, yaxt = "n"#
+		, ylab = "Expected Probability Difference"#
+		, xlab = ""#
+		)#
+abline(h=0, lty = 2, lwd = 2, col = oxred)#
+lines(c(1,1),c(all.h, all.l),  lwd = 3, col = oxblue)#
+points(1,all.m, pch = 16 , cex = 1.8, col = oxblue)#
+#
+dev.off()

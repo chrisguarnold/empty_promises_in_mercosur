@@ -1,0 +1,750 @@
+2-2
+mean(rnorm(100000))
+mean(rnorm(1000000000))
+mean(rnorm(10000000))
+mean(rnorm(100000000))
+mean(rnorm(1000000000))
+install.packages("Zelig")
+install.packages("Zelig", dependencies = TRUE)
+defaults write org.R-project.R force.LANG en_US.UTF-8
+help('pie')
+source("http://freakonometrics.free.fr/probit.R")#
+> reg=glm(Y~X1+X2,family=binomial)
+source("http://freakonometrics.free.fr/probit.R")
+reg=glm(Y~X1+X2,family=binomial)
+plot(reg,which=1)
+library(foreign)
+read.dta("/Users/Haui/Desktop/diputados 83-13.dta")
+dat<-read.dta("/Users/Haui/Desktop/diputados 83-13.dta")
+dim(dat)
+dat[1:10,]
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files')
+###########################################################
+# MASTER                                                ###
+#                                                       ###
+# "Empty Promises and Non-Incorporation in Mercosur"    ###
+# International Interactions                            ###
+# Chris Arnold                                          ###
+# May 2016                                              ###
+###########################################################
+#
+# Current version on May 10th 2016 runs on Zelig 5 and R 3.2.3 #
+# All the implementation was originally implemented with Zelig 3.x and R 2.14#
+# ============#
+# = Packages =#
+# ============#
+#
+library(survival)#
+library(Zelig)#
+library(lattice)#
+library(dummies)#
+library(MASS)#
+library(stargazer)#
+#
+# ========#
+# = Data =#
+# ========#
+#
+load("data/master.Rdata")#
+#
+# without imputation#
+load(file = "data/eha_data.Rdata")#
+#
+## with imputation#
+load("data/eha_data1.Rdata")#
+load("data/eha_data2.Rdata")#
+load("data/eha_data3.Rdata")#
+load("data/eha_data4.Rdata")#
+load("data/eha_data5.Rdata")#
+# =============#
+# = Functions =#
+# =============#
+# Functions for quantiles#
+low <- function(x){#
+	quantile(x, .025, na.rm = TRUE)#
+}#
+high <- function(x){#
+	quantile(x, .975, na.rm = TRUE)#
+}
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage2')
+dat <- datlong1
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage2')
+# Complete Model with interactions#
+CompleteZeligNoFr<- function(dat){#
+			weib <- zelig(Surv((tcens - tdec+1), incdummy) ~ #
+				confl.level#
+				+ cmc + tc#
+				+ prom#
+				+ prom:cmc#
+				+ prom:tc				#
+				+ pol.dim.type6.gov_coop:confl.level             #
+				+ pol.dim.type6.interna:confl.level #
+				+ pol.dim.type6.internal_market:confl.level  #
+				+ pol.dim.type6.tariff_exception:confl.level#
+#				+ pol.dim.type6.tariff_nomenclature  #
+#				+ pol.dim.type6.tariff_rest          #
+				+ pol.dim.type6.technical_regulations:confl.level#
+				+ pol.dim.type6.NA:confl.level#
+				+ pol.dim.type6.gov_coop        #
+				+ pol.dim.type6.interna              #
+				+ pol.dim.type6.internal_market      #
+				+ pol.dim.type6.tariff_exception     #
+#				+ pol.dim.type6.tariff_nomenclature  #
+#				+ pol.dim.type6.tariff_rest          #
+				+ pol.dim.type6.technical_regulations#
+				+ pol.dim.type6.NA 				#
+				+ arg + bra + par#
+				# Controls for the context#
+				+ vpindex + heimspiel#
+				# Controls for the policy#
+				+ complexity.pc + annex + dderrogates	#
+			,model = "weibull"#
+#			,data = datlong			#
+			,data= dat#
+          )#
+		# Setting the x values for the popularity simulations#
+		#------------------------------------------------------------------------		#
+		xout.cmc.gc.h <- setx(weib, pol.dim.type6.gov_coop                	= 1#
+		                           	, pol.dim.type6.interna                 	= 0#
+		                           	, pol.dim.type6.internal_market         	= 0#
+		                           	, pol.dim.type6.tariff_exception        	= 0 #
+		                           	, pol.dim.type6.technical_regulations   	= 0#
+		                           	, pol.dim.type6.NA 		       		   	= 0#
+									, cmc = 1#
+									, tc = 0#
+									,prom=89.8)#
+	    xout.cmc.gc.l <- setx(weib, pol.dim.type6.gov_coop                	= 1#
+	                              	, pol.dim.type6.interna                 	= 0#
+	                              	, pol.dim.type6.internal_market         	= 0#
+	                              	, pol.dim.type6.tariff_exception        	= 0 #
+	                              	, pol.dim.type6.technical_regulations   	= 0#
+	                              	, pol.dim.type6.NA 		       		   	= 0#
+	   							, cmc = 1#
+	   							, tc = 0#
+								, prom=70.4)#
+		#------------------------------------------------------------------------								#
+ 		xout.ncmc.gc.h <- setx(weib, pol.dim.type6.gov_coop                	= 1#
+                            			, pol.dim.type6.interna                 	= 0#
+                            			, pol.dim.type6.internal_market         	= 0#
+                            			, pol.dim.type6.tariff_exception        	= 0 #
+                            			, pol.dim.type6.technical_regulations   	= 0#
+                            			, pol.dim.type6.NA 		       		   	= 0#
+ 									, cmc = 0#
+ 									, prom=89.8)#
+		 xout.ncmc.gc.l <- setx(weib, pol.dim.type6.gov_coop                	= 1#
+		                     			, pol.dim.type6.interna                 	= 0#
+		                     			, pol.dim.type6.internal_market         	= 0#
+		                     			, pol.dim.type6.tariff_exception        	= 0 #
+		                     			, pol.dim.type6.technical_regulations   	= 0#
+		                     			, pol.dim.type6.NA 		       		   	= 0#
+		 							, cmc = 0#
+		 							, prom=70.4)#
+		#-------------------------------------------------------------------------#
+		weib.confl.gc.l.x <- setx(weib,  confl.level =  0, pol.dim.type6.gov_coop =1)#
+		weib.confl.gc.h.x <- setx(weib,  confl.level =  18.5, pol.dim.type6.gov_coop =1)#
+		weib.confl.ngc.l.x <- setx(weib,  confl.level =  0, pol.dim.type6.gov_coop =0)#
+		weib.confl.ngc.h.x <- setx(weib,  confl.level =  18.5, pol.dim.type6.gov_coop =0)#
+		# Simulating#
+		sim.cmc.gc   	<- sim(weib, x= xout.cmc.gc.l  	  ,x1= xout.cmc.gc.h   ,num = 10000)#
+		sim.ncmc.gc    	<- sim(weib, x= xout.ncmc.gc.l    ,x1= xout.ncmc.gc.h  ,num = 10000)#
+		sim.confl.gc <- sim(weib, x1 = weib.confl.gc.h.x, x = weib.confl.gc.l.x,num = 10000)#
+		sim.confl.ngc <- sim(weib, x1 = weib.confl.ngc.h.x, x = weib.confl.ngc.l.x,num = 10000)#
+		#sim.cmc.ngc   	<- sim(weib, x= xout.cmc.ngc.l 	  ,x1= xout.cmc.ngc.h  ,num = 10000)#
+		#sim.ncmc.ngc    <- sim(weib, x= xout.ncmc.ngc.l   ,x1= xout.ncmc.ngc.h ,num = 10000)#
+		#sim.cmc         <- sim(weib, x= xout.cmc.l   ,x1= xout.cmc.h ,num = 10000)		#
+		#sim.ncmc        <- sim(weib, x= xout.ncmc.l   ,x1= xout.ncmc.h ,num = 10000)				#
+		#sim.cmc.tc   	<- sim(weib, x= xout.cmc.tc.l  	  ,x1= xout.cmc.tc.h   ,num = 10000)#
+		#sim.ncmc.tc    	<- sim(weib, x= xout.ncmc.tc.l    ,x1= xout.ncmc.tc.h  ,num = 10000)#
+		# Returning vector with expected First Differences#
+#		return(sim.cmc.gc)#
+		return(data.frame(sim.cmc.gc$sim.out$x1$fd[[1]]#
+			        	, sim.ncmc.gc$sim.out$x1$fd[[1]]#
+						, sim.confl.gc$sim.out$x1$fd[[1]]#
+						, sim.confl.ngc$sim.out$x1$fd[[1]]#
+			        	#, sim.cmc.ngc$sim.out$x1$fd[[1]]#
+			        	#, sim.ncmc.ngc$sim.out$x1$fd[[1]]#
+			        	#, sim.cmc$sim.out$x1$fd[[1]]#
+			        	#, sim.ncmc$sim.out$x1$fd[[1]]#
+						#, sim.cmc.tc$sim.out$x1$fd[[1]]#
+						#, sim.ncmc.tc$sim.out$x1$fd[[1]]						#
+						)#
+				)#
+}
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage2')
+nofr.sims.1 <- CompleteZeligNoFr(datlong1)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage2')
+nofr.sims.1
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage2')
+dim(nofr.sims.1)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage2')
+dim(nofr.sims.1) == dim(nofr.sims.2)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage2')
+nofr.sims.2 <- CompleteZeligNoFr(datlong2)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage2')
+dat <- datlong1#
+##
+#			weib <- zelig(Surv((tcens - tdec+1), incdummy) ~ #
+#				confl.level#
+#				+ cmc + tc#
+#				+ prom#
+#				+ prom:cmc#
+#				+ prom:tc				#
+#				+ pol.dim.type6.gov_coop:confl.level             #
+#				+ pol.dim.type6.interna:confl.level #
+#				+ pol.dim.type6.internal_market:confl.level  #
+#				+ pol.dim.type6.tariff_exception:confl.level#
+##				+ pol.dim.type6.tariff_nomenclature  #
+##				+ pol.dim.type6.tariff_rest          #
+#				+ pol.dim.type6.technical_regulations:confl.level#
+#				+ pol.dim.type6.NA:confl.level#
+#				+ pol.dim.type6.gov_coop        #
+#				+ pol.dim.type6.interna              #
+#				+ pol.dim.type6.internal_market      #
+#				+ pol.dim.type6.tariff_exception     #
+##				+ pol.dim.type6.tariff_nomenclature  #
+##				+ pol.dim.type6.tariff_rest          #
+#				+ pol.dim.type6.technical_regulations#
+#				+ pol.dim.type6.NA 				#
+#				+ arg + bra + par#
+#				# Controls for the context#
+#				+ vpindex + heimspiel#
+#				# Controls for the policy#
+#				+ complexity.pc + annex + dderrogates	#
+#			,model = "weibull"#
+#			,data = datlong1			#
+##			,data= dat#
+#          )#
+#		# Setting the x values for the popularity simulations#
+#		#------------------------------------------------------------------------		#
+#		xout.cmc.gc.h <- setx(weib, pol.dim.type6.gov_coop                	= 1#
+#		                           	, pol.dim.type6.interna                 	= 0#
+#		                           	, pol.dim.type6.internal_market         	= 0#
+#		                           	, pol.dim.type6.tariff_exception        	= 0 #
+#		                           	, pol.dim.type6.technical_regulations   	= 0#
+#		                           	, pol.dim.type6.NA 		       		   	= 0#
+#									, cmc = 1#
+#									, tc = 0#
+#									,prom=89.8)#
+#									#
+#									#
+# File for the anaysis#
+# Somewhen in Oct 12#
+# Reviewed in Jan/Feb 13#
+# Update to bring the five imputed data sets together July 13 in Karlsruhe#
+#
+# Updated version from 2014#
+##### Complete case for different policy categories#
+# Complete Model with interactions#
+CompleteZeligNoFr<- function(dat){#
+			weib <- zelig(Surv((tcens - tdec+1), incdummy) ~ #
+				confl.level#
+				+ cmc + tc#
+				+ prom#
+				+ prom:cmc#
+				+ prom:tc				#
+				+ pol.dim.type6.gov_coop:confl.level             #
+				+ pol.dim.type6.interna:confl.level #
+				+ pol.dim.type6.internal_market:confl.level  #
+				+ pol.dim.type6.tariff_exception:confl.level#
+#				+ pol.dim.type6.tariff_nomenclature  #
+#				+ pol.dim.type6.tariff_rest          #
+				+ pol.dim.type6.technical_regulations:confl.level#
+				+ pol.dim.type6.NA:confl.level#
+				+ pol.dim.type6.gov_coop        #
+				+ pol.dim.type6.interna              #
+				+ pol.dim.type6.internal_market      #
+				+ pol.dim.type6.tariff_exception     #
+#				+ pol.dim.type6.tariff_nomenclature  #
+#				+ pol.dim.type6.tariff_rest          #
+				+ pol.dim.type6.technical_regulations#
+				+ pol.dim.type6.NA 				#
+				+ arg + bra + par#
+				# Controls for the context#
+				+ vpindex + heimspiel#
+				# Controls for the policy#
+				+ complexity.pc + annex + dderrogates	#
+			,model = "weibull"#
+#			,data = datlong			#
+			,data= dat#
+          )#
+		# Setting the x values for the popularity simulations#
+		#------------------------------------------------------------------------		#
+		xout.cmc.gc.h <- setx(weib, pol.dim.type6.gov_coop                	= 1#
+		                           	, pol.dim.type6.interna                 	= 0#
+		                           	, pol.dim.type6.internal_market         	= 0#
+		                           	, pol.dim.type6.tariff_exception        	= 0 #
+		                           	, pol.dim.type6.technical_regulations   	= 0#
+		                           	, pol.dim.type6.NA 		       		   	= 0#
+									, cmc = 1#
+									, tc = 0#
+									,prom=89.8)#
+	    xout.cmc.gc.l <- setx(weib, pol.dim.type6.gov_coop                	= 1#
+	                              	, pol.dim.type6.interna                 	= 0#
+	                              	, pol.dim.type6.internal_market         	= 0#
+	                              	, pol.dim.type6.tariff_exception        	= 0 #
+	                              	, pol.dim.type6.technical_regulations   	= 0#
+	                              	, pol.dim.type6.NA 		       		   	= 0#
+	   							, cmc = 1#
+	   							, tc = 0#
+								, prom=70.4)#
+		#------------------------------------------------------------------------								#
+ 		xout.ncmc.gc.h <- setx(weib, pol.dim.type6.gov_coop                	= 1#
+                            			, pol.dim.type6.interna                 	= 0#
+                            			, pol.dim.type6.internal_market         	= 0#
+                            			, pol.dim.type6.tariff_exception        	= 0 #
+                            			, pol.dim.type6.technical_regulations   	= 0#
+                            			, pol.dim.type6.NA 		       		   	= 0#
+ 									, cmc = 0#
+ 									, prom=89.8)#
+		 xout.ncmc.gc.l <- setx(weib, pol.dim.type6.gov_coop                	= 1#
+		                     			, pol.dim.type6.interna                 	= 0#
+		                     			, pol.dim.type6.internal_market         	= 0#
+		                     			, pol.dim.type6.tariff_exception        	= 0 #
+		                     			, pol.dim.type6.technical_regulations   	= 0#
+		                     			, pol.dim.type6.NA 		       		   	= 0#
+		 							, cmc = 0#
+		 							, prom=70.4)#
+		#-------------------------------------------------------------------------#
+		weib.confl.gc.l.x <- setx(weib,  confl.level =  0, pol.dim.type6.gov_coop =1)#
+		weib.confl.gc.h.x <- setx(weib,  confl.level =  18.5, pol.dim.type6.gov_coop =1)#
+		weib.confl.ngc.l.x <- setx(weib,  confl.level =  0, pol.dim.type6.gov_coop =0)#
+		weib.confl.ngc.h.x <- setx(weib,  confl.level =  18.5, pol.dim.type6.gov_coop =0)#
+		# Simulating#
+		sim.cmc.gc   	<- sim(weib, x= xout.cmc.gc.l  	  ,x1= xout.cmc.gc.h   ,num = 10000)#
+		sim.ncmc.gc    	<- sim(weib, x= xout.ncmc.gc.l    ,x1= xout.ncmc.gc.h  ,num = 10000)#
+		sim.confl.gc <- sim(weib, x1 = weib.confl.gc.h.x, x = weib.confl.gc.l.x,num = 10000)#
+		sim.confl.ngc <- sim(weib, x1 = weib.confl.ngc.h.x, x = weib.confl.ngc.l.x,num = 10000)#
+		cat(summary(weib))#
+		#sim.cmc.ngc   	<- sim(weib, x= xout.cmc.ngc.l 	  ,x1= xout.cmc.ngc.h  ,num = 10000)#
+		#sim.ncmc.ngc    <- sim(weib, x= xout.ncmc.ngc.l   ,x1= xout.ncmc.ngc.h ,num = 10000)#
+		#sim.cmc         <- sim(weib, x= xout.cmc.l   ,x1= xout.cmc.h ,num = 10000)		#
+		#sim.ncmc        <- sim(weib, x= xout.ncmc.l   ,x1= xout.ncmc.h ,num = 10000)				#
+		#sim.cmc.tc   	<- sim(weib, x= xout.cmc.tc.l  	  ,x1= xout.cmc.tc.h   ,num = 10000)#
+		#sim.ncmc.tc    	<- sim(weib, x= xout.ncmc.tc.l    ,x1= xout.ncmc.tc.h  ,num = 10000)#
+		# Returning vector with expected First Differences#
+#		return(sim.cmc.gc)#
+		return(data.frame(sim.cmc.gc$sim.out$x1$fd[[1]]#
+			        	, sim.ncmc.gc$sim.out$x1$fd[[1]]#
+						, sim.confl.gc$sim.out$x1$fd[[1]]#
+						, sim.confl.ngc$sim.out$x1$fd[[1]]#
+			        	#, sim.cmc.ngc$sim.out$x1$fd[[1]]#
+			        	#, sim.ncmc.ngc$sim.out$x1$fd[[1]]#
+			        	#, sim.cmc$sim.out$x1$fd[[1]]#
+			        	#, sim.ncmc$sim.out$x1$fd[[1]]#
+						#, sim.cmc.tc$sim.out$x1$fd[[1]]#
+						#, sim.ncmc.tc$sim.out$x1$fd[[1]]						#
+						)#
+				)#
+}
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage2')
+nofr.sims.1 <- CompleteZeligNoFr(datlong1) #
+nofr.sims.2 <- CompleteZeligNoFr(datlong2)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage2')
+dat <- datlong2#
+##
+#			weib <- zelig(Surv((tcens - tdec+1), incdummy) ~ #
+#				confl.level#
+#				+ cmc + tc#
+#				+ prom#
+#				+ prom:cmc#
+#				+ prom:tc				#
+#				+ pol.dim.type6.gov_coop:confl.level             #
+#				+ pol.dim.type6.interna:confl.level #
+#				+ pol.dim.type6.internal_market:confl.level  #
+#				+ pol.dim.type6.tariff_exception:confl.level#
+##				+ pol.dim.type6.tariff_nomenclature  #
+##				+ pol.dim.type6.tariff_rest          #
+#				+ pol.dim.type6.technical_regulations:confl.level#
+#				+ pol.dim.type6.NA:confl.level#
+#				+ pol.dim.type6.gov_coop        #
+#				+ pol.dim.type6.interna              #
+#				+ pol.dim.type6.internal_market      #
+#				+ pol.dim.type6.tariff_exception     #
+##				+ pol.dim.type6.tariff_nomenclature  #
+##				+ pol.dim.type6.tariff_rest          #
+#				+ pol.dim.type6.technical_regulations#
+#				+ pol.dim.type6.NA 				#
+#				+ arg + bra + par#
+#				# Controls for the context#
+#				+ vpindex + heimspiel#
+#				# Controls for the policy#
+#				+ complexity.pc + annex + dderrogates	#
+#			,model = "weibull"#
+#			,data = datlong1			#
+##			,data= dat#
+#          )#
+#		# Setting the x values for the popularity simulations#
+#		#------------------------------------------------------------------------		#
+#		xout.cmc.gc.h <- setx(weib, pol.dim.type6.gov_coop                	= 1#
+#		                           	, pol.dim.type6.interna                 	= 0#
+#		                           	, pol.dim.type6.internal_market         	= 0#
+#		                           	, pol.dim.type6.tariff_exception        	= 0 #
+#		                           	, pol.dim.type6.technical_regulations   	= 0#
+#		                           	, pol.dim.type6.NA 		       		   	= 0#
+#									, cmc = 1#
+#									, tc = 0#
+#									,prom=89.8)#
+#									#
+#									#
+# File for the anaysis#
+# Somewhen in Oct 12#
+# Reviewed in Jan/Feb 13#
+# Update to bring the five imputed data sets together July 13 in Karlsruhe#
+#
+# Updated version from 2014#
+##### Complete case for different policy categories#
+# Complete Model with interactions#
+CompleteZeligNoFr<- function(dat){#
+			weib <- zelig(Surv((tcens - tdec+1), incdummy) ~ #
+				confl.level#
+				+ cmc + tc#
+				+ prom#
+				+ prom:cmc#
+				+ prom:tc				#
+				+ pol.dim.type6.gov_coop:confl.level             #
+				+ pol.dim.type6.interna:confl.level #
+				+ pol.dim.type6.internal_market:confl.level  #
+				+ pol.dim.type6.tariff_exception:confl.level#
+#				+ pol.dim.type6.tariff_nomenclature  #
+#				+ pol.dim.type6.tariff_rest          #
+				+ pol.dim.type6.technical_regulations:confl.level#
+				+ pol.dim.type6.NA:confl.level#
+				+ pol.dim.type6.gov_coop        #
+				+ pol.dim.type6.interna              #
+				+ pol.dim.type6.internal_market      #
+				+ pol.dim.type6.tariff_exception     #
+#				+ pol.dim.type6.tariff_nomenclature  #
+#				+ pol.dim.type6.tariff_rest          #
+				+ pol.dim.type6.technical_regulations#
+				+ pol.dim.type6.NA 				#
+				+ arg + bra + par#
+				# Controls for the context#
+				+ vpindex + heimspiel#
+				# Controls for the policy#
+				+ complexity.pc + annex + dderrogates	#
+			,model = "weibull"#
+#			,data = datlong			#
+			,data= dat#
+          )#
+		# Setting the x values for the popularity simulations#
+		#------------------------------------------------------------------------		#
+		xout.cmc.gc.h <- setx(weib, pol.dim.type6.gov_coop                	= 1#
+		                           	, pol.dim.type6.interna                 	= 0#
+		                           	, pol.dim.type6.internal_market         	= 0#
+		                           	, pol.dim.type6.tariff_exception        	= 0 #
+		                           	, pol.dim.type6.technical_regulations   	= 0#
+		                           	, pol.dim.type6.NA 		       		   	= 0#
+									, cmc = 1#
+									, tc = 0#
+									,prom=89.8)#
+	    xout.cmc.gc.l <- setx(weib, pol.dim.type6.gov_coop                	= 1#
+	                              	, pol.dim.type6.interna                 	= 0#
+	                              	, pol.dim.type6.internal_market         	= 0#
+	                              	, pol.dim.type6.tariff_exception        	= 0 #
+	                              	, pol.dim.type6.technical_regulations   	= 0#
+	                              	, pol.dim.type6.NA 		       		   	= 0#
+	   							, cmc = 1#
+	   							, tc = 0#
+								, prom=70.4)#
+		#------------------------------------------------------------------------								#
+ 		xout.ncmc.gc.h <- setx(weib, pol.dim.type6.gov_coop                	= 1#
+                            			, pol.dim.type6.interna                 	= 0#
+                            			, pol.dim.type6.internal_market         	= 0#
+                            			, pol.dim.type6.tariff_exception        	= 0 #
+                            			, pol.dim.type6.technical_regulations   	= 0#
+                            			, pol.dim.type6.NA 		       		   	= 0#
+ 									, cmc = 0#
+ 									, prom=89.8)#
+		 xout.ncmc.gc.l <- setx(weib, pol.dim.type6.gov_coop                	= 1#
+		                     			, pol.dim.type6.interna                 	= 0#
+		                     			, pol.dim.type6.internal_market         	= 0#
+		                     			, pol.dim.type6.tariff_exception        	= 0 #
+		                     			, pol.dim.type6.technical_regulations   	= 0#
+		                     			, pol.dim.type6.NA 		       		   	= 0#
+		 							, cmc = 0#
+		 							, prom=70.4)#
+		#-------------------------------------------------------------------------#
+		weib.confl.gc.l.x <- setx(weib,  confl.level =  0, pol.dim.type6.gov_coop =1)#
+		weib.confl.gc.h.x <- setx(weib,  confl.level =  18.5, pol.dim.type6.gov_coop =1)#
+		weib.confl.ngc.l.x <- setx(weib,  confl.level =  0, pol.dim.type6.gov_coop =0)#
+		weib.confl.ngc.h.x <- setx(weib,  confl.level =  18.5, pol.dim.type6.gov_coop =0)#
+		# Simulating#
+		sim.cmc.gc   	<- sim(weib, x= xout.cmc.gc.l  	  ,x1= xout.cmc.gc.h   ,num = 10000)#
+		sim.ncmc.gc    	<- sim(weib, x= xout.ncmc.gc.l    ,x1= xout.ncmc.gc.h  ,num = 10000)#
+		sim.confl.gc <- sim(weib, x1 = weib.confl.gc.h.x, x = weib.confl.gc.l.x,num = 10000)#
+		sim.confl.ngc <- sim(weib, x1 = weib.confl.ngc.h.x, x = weib.confl.ngc.l.x,num = 10000)#
+		cat(summary(weib))#
+		#sim.cmc.ngc   	<- sim(weib, x= xout.cmc.ngc.l 	  ,x1= xout.cmc.ngc.h  ,num = 10000)#
+		#sim.ncmc.ngc    <- sim(weib, x= xout.ncmc.ngc.l   ,x1= xout.ncmc.ngc.h ,num = 10000)#
+		#sim.cmc         <- sim(weib, x= xout.cmc.l   ,x1= xout.cmc.h ,num = 10000)		#
+		#sim.ncmc        <- sim(weib, x= xout.ncmc.l   ,x1= xout.ncmc.h ,num = 10000)				#
+		#sim.cmc.tc   	<- sim(weib, x= xout.cmc.tc.l  	  ,x1= xout.cmc.tc.h   ,num = 10000)#
+		#sim.ncmc.tc    	<- sim(weib, x= xout.ncmc.tc.l    ,x1= xout.ncmc.tc.h  ,num = 10000)#
+		# Returning vector with expected First Differences#
+#		return(sim.cmc.gc)#
+		return(data.frame(sim.cmc.gc$sim.out$x1$fd[[1]]#
+			        	, sim.ncmc.gc$sim.out$x1$fd[[1]]#
+						, sim.confl.gc$sim.out$x1$fd[[1]]#
+						, sim.confl.ngc$sim.out$x1$fd[[1]]#
+			        	#, sim.cmc.ngc$sim.out$x1$fd[[1]]#
+			        	#, sim.ncmc.ngc$sim.out$x1$fd[[1]]#
+			        	#, sim.cmc$sim.out$x1$fd[[1]]#
+			        	#, sim.ncmc$sim.out$x1$fd[[1]]#
+						#, sim.cmc.tc$sim.out$x1$fd[[1]]#
+						#, sim.ncmc.tc$sim.out$x1$fd[[1]]						#
+						)#
+				)#
+}#
+# Estimate the model for each of the imputed data sets#
+nofr.sims.1 <- CompleteZeligNoFr(datlong1) #
+nofr.sims.2 <- CompleteZeligNoFr(datlong2)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage2')
+weib <- zelig(Surv((tcens - tdec+1), incdummy) ~ #
+				confl.level#
+				+ cmc + tc#
+				+ prom#
+				+ prom:cmc#
+				+ prom:tc				#
+				+ pol.dim.type6.gov_coop:confl.level             #
+				+ pol.dim.type6.interna:confl.level #
+				+ pol.dim.type6.internal_market:confl.level  #
+				+ pol.dim.type6.tariff_exception:confl.level#
+#				+ pol.dim.type6.tariff_nomenclature  #
+#				+ pol.dim.type6.tariff_rest          #
+				+ pol.dim.type6.technical_regulations:confl.level#
+				+ pol.dim.type6.NA:confl.level#
+				+ pol.dim.type6.gov_coop        #
+				+ pol.dim.type6.interna              #
+				+ pol.dim.type6.internal_market      #
+				+ pol.dim.type6.tariff_exception     #
+#				+ pol.dim.type6.tariff_nomenclature  #
+#				+ pol.dim.type6.tariff_rest          #
+				+ pol.dim.type6.technical_regulations#
+				+ pol.dim.type6.NA 				#
+				+ arg + bra + par#
+				# Controls for the context#
+				+ vpindex + heimspiel#
+				# Controls for the policy#
+				+ complexity.pc + annex + dderrogates	#
+			,model = "weibull"#
+			,data = data.frame(datlong1, datlong2)#
+#			,data= dat#
+          )
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage2')
+###########################################################
+# Main Model                                            ###
+#                                                       ###
+# "Empty Promises and Non-Incorporation in Mercosur"    ###
+# International Interactions                            ###
+# Chris Arnold                                          ###
+# May 2016                                              ###
+###########################################################
+# May 10th this is the model#
+# Complete Model with interactions#
+weib <- zelig(Surv((tcens - tdec+1), incdummy) ~ #
+				confl.level#
+				+ cmc + tc#
+				+ prom#
+				+ prom:cmc#
+				+ prom:tc				#
+				+ pol.dim.type6.gov_coop:confl.level             #
+				+ pol.dim.type6.interna:confl.level #
+				+ pol.dim.type6.internal_market:confl.level  #
+				+ pol.dim.type6.tariff_exception:confl.level#
+#				+ pol.dim.type6.tariff_nomenclature  #
+#				+ pol.dim.type6.tariff_rest          #
+				+ pol.dim.type6.technical_regulations:confl.level#
+				+ pol.dim.type6.NA:confl.level#
+				+ pol.dim.type6.gov_coop        #
+				+ pol.dim.type6.interna              #
+				+ pol.dim.type6.internal_market      #
+				+ pol.dim.type6.tariff_exception     #
+#				+ pol.dim.type6.tariff_nomenclature  #
+#				+ pol.dim.type6.tariff_rest          #
+				+ pol.dim.type6.technical_regulations#
+				+ pol.dim.type6.NA 				#
+				+ arg + bra + par#
+				# Controls for the context#
+				+ vpindex + heimspiel#
+				# Controls for the policy#
+				+ complexity.pc + annex + dderrogates	#
+			,model = "weibull"#
+#			,data = datlong			#
+#			,data= as.list(datlong1, datlong2, datlong3, datlong4, datlong5)#
+			,data= data.frame(datlong1, datlong2, datlong3, datlong4, datlong5)#
+)#
+#
+summary(weib)#
+#
+		# Setting the x values for the popularity simulations#
+		#------------------------------------------------------------------------		#
+		xout.cmc.gc.h <- setx(weib, pol.dim.type6.gov_coop                	= 1#
+		                           	, pol.dim.type6.interna                 	= 0#
+		                           	, pol.dim.type6.internal_market         	= 0#
+		                           	, pol.dim.type6.tariff_exception        	= 0 #
+		                           	, pol.dim.type6.technical_regulations   	= 0#
+		                           	, pol.dim.type6.NA 		       		   	= 0#
+									, cmc = 1#
+									, tc = 0#
+									,prom=89.8)#
+	    xout.cmc.gc.l <- setx(weib, pol.dim.type6.gov_coop                	= 1#
+	                              	, pol.dim.type6.interna                 	= 0#
+	                              	, pol.dim.type6.internal_market         	= 0#
+	                              	, pol.dim.type6.tariff_exception        	= 0 #
+	                              	, pol.dim.type6.technical_regulations   	= 0#
+	                              	, pol.dim.type6.NA 		       		   	= 0#
+	   							, cmc = 1#
+	   							, tc = 0#
+								, prom=70.4)#
+		#------------------------------------------------------------------------								#
+ 		xout.ncmc.gc.h <- setx(weib, pol.dim.type6.gov_coop                	= 1#
+                            			, pol.dim.type6.interna                 	= 0#
+                            			, pol.dim.type6.internal_market         	= 0#
+                            			, pol.dim.type6.tariff_exception        	= 0 #
+                            			, pol.dim.type6.technical_regulations   	= 0#
+                            			, pol.dim.type6.NA 		       		   	= 0#
+ 									, cmc = 0#
+ 									, prom=89.8)#
+		 xout.ncmc.gc.l <- setx(weib, pol.dim.type6.gov_coop                	= 1#
+		                     			, pol.dim.type6.interna                 	= 0#
+		                     			, pol.dim.type6.internal_market         	= 0#
+		                     			, pol.dim.type6.tariff_exception        	= 0 #
+		                     			, pol.dim.type6.technical_regulations   	= 0#
+		                     			, pol.dim.type6.NA 		       		   	= 0#
+		 							, cmc = 0#
+		 							, prom=70.4)#
+		#-------------------------------------------------------------------------#
+		weib.confl.gc.l.x <- setx(weib,  confl.level =  0, pol.dim.type6.gov_coop =1)#
+		weib.confl.gc.h.x <- setx(weib,  confl.level =  18.5, pol.dim.type6.gov_coop =1)#
+		weib.confl.ngc.l.x <- setx(weib,  confl.level =  0, pol.dim.type6.gov_coop =0)#
+		weib.confl.ngc.h.x <- setx(weib,  confl.level =  18.5, pol.dim.type6.gov_coop =0)#
+		# Simulating#
+		sim.cmc.gc   	<- sim(weib, x= xout.cmc.gc.l  	  ,x1= xout.cmc.gc.h   ,num = 10000)#
+		sim.ncmc.gc    	<- sim(weib, x= xout.ncmc.gc.l    ,x1= xout.ncmc.gc.h  ,num = 10000)#
+		sim.confl.gc <- sim(weib, x1 = weib.confl.gc.h.x, x = weib.confl.gc.l.x,num = 10000)#
+		sim.confl.ngc <- sim(weib, x1 = weib.confl.ngc.h.x, x = weib.confl.ngc.l.x,num = 10000)#
+		#sim.cmc.ngc   	<- sim(weib, x= xout.cmc.ngc.l 	  ,x1= xout.cmc.ngc.h  ,num = 10000)#
+		#sim.ncmc.ngc    <- sim(weib, x= xout.ncmc.ngc.l   ,x1= xout.ncmc.ngc.h ,num = 10000)#
+		#sim.cmc         <- sim(weib, x= xout.cmc.l   ,x1= xout.cmc.h ,num = 10000)		#
+		#sim.ncmc        <- sim(weib, x= xout.ncmc.l   ,x1= xout.ncmc.h ,num = 10000)				#
+		#sim.cmc.tc   	<- sim(weib, x= xout.cmc.tc.l  	  ,x1= xout.cmc.tc.h   ,num = 10000)#
+		#sim.ncmc.tc    	<- sim(weib, x= xout.ncmc.tc.l    ,x1= xout.ncmc.tc.h  ,num = 10000)#
+		# Returning vector with expected First Differences#
+#		return(sim.cmc.gc)#
+		return(data.frame(sim.cmc.gc$sim.out$x1$fd[[1]]#
+			        	, sim.ncmc.gc$sim.out$x1$fd[[1]]#
+						, sim.confl.gc$sim.out$x1$fd[[1]]#
+						, sim.confl.ngc$sim.out$x1$fd[[1]]#
+			        	#, sim.cmc.ngc$sim.out$x1$fd[[1]]#
+			        	#, sim.ncmc.ngc$sim.out$x1$fd[[1]]#
+			        	#, sim.cmc$sim.out$x1$fd[[1]]#
+			        	#, sim.ncmc$sim.out$x1$fd[[1]]#
+						#, sim.cmc.tc$sim.out$x1$fd[[1]]#
+						#, sim.ncmc.tc$sim.out$x1$fd[[1]]						#
+						)#
+				)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage2')
+sim.confl.ngc
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage2')
+cmc.gc    <- mhl.maker(sim.cmc.gc$sim.out$x1$fd[[1]])
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage2')
+# Aim: Get the respective results from the simulations#
+# Functions 'low' and 'high' defined in master.r#
+mhl.maker <- function(sims){#
+	mean <-  mean(sims)#
+	high <-  high(sims)#
+	low  <-  low (sims)#
+	result <- c(mean, high, low)#
+	return(result)#
+}
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage2')
+cmc.gc    <- mhl.maker(sim.cmc.gc$sim.out$x1$fd[[1]])
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage2')
+cmc.gc
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage2')
+#pdf("../figures/s2_pop_fd_gc.pdf", height = 5, width = 3.8)#
+par(mar = c(3,5,.4,.4))#
+plot(1,1, type = "n"#
+		, bty = "n"#
+		, xlim = c(0, 3)#
+		, ylim = c(-2000,10000)#
+		, xaxt = "n" , yaxt = "n"#
+		, xlab = " "#
+		, ylab = " "#
+		)#
+#axes etc.#
+axis(2, las = 1)#
+mtext('Expected Duration Difference (days)', 2, line = 4)#
+abline(h=0, col = "grey", lwd = 2, lty = 2)		#
+lines(c(1,1), c(cmc.gc[2], cmc.gc[3]), lwd = 3, col = "black")#
+lines(c(2,2), c(ncmc.gc[2], ncmc.gc[3]), lwd = 3, col = "black")#
+points(c(1,2),c(cmc.gc[1], ncmc.gc[1]), pch = 16, col = c("black"), cex = 1.8)#
+mtext(at = c(1,2)#
+	,text = c("CMC \n "#
+			, "CMG & TC \n")#
+	, side = 1, line = 1, cex = .95#
+)#
+#dev.off()
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage2')
+# Expected durations for the scenarios#
+cmc.gc    <- mhl.maker(sim.cmc.gc$sim.out$x1$fd[[1]]) #
+ncmc.gc   <- mhl.maker(sim.ncmc.gc$sim.out$x1$fd[[1]])#
+confl.gc  <- mhl.maker(sim.confl.gc$sim.out$x1$fd[[1]])#
+confl.ngc <- mhl.maker(sim.confl.ngc$sim.out$x1$fd[[1]])
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage2')
+#pdf("../figures/s2_pop_fd_gc.pdf", height = 5, width = 3.8)#
+par(mar = c(3,5,.4,.4))#
+plot(1,1, type = "n"#
+		, bty = "n"#
+		, xlim = c(0, 3)#
+		, ylim = c(-2000,10000)#
+		, xaxt = "n" , yaxt = "n"#
+		, xlab = " "#
+		, ylab = " "#
+		)#
+#axes etc.#
+axis(2, las = 1)#
+mtext('Expected Duration Difference (days)', 2, line = 4)#
+abline(h=0, col = "grey", lwd = 2, lty = 2)		#
+lines(c(1,1), c(cmc.gc[2], cmc.gc[3]), lwd = 3, col = "black")#
+lines(c(2,2), c(ncmc.gc[2], ncmc.gc[3]), lwd = 3, col = "black")#
+points(c(1,2),c(cmc.gc[1], ncmc.gc[1]), pch = 16, col = c("black"), cex = 1.8)#
+mtext(at = c(1,2)#
+	,text = c("CMC \n "#
+			, "CMG & TC \n")#
+	, side = 1, line = 1, cex = .95#
+)
+setwd('/Users/Haui/Documents/Academia/Publications/Papers/veto3/submission/replication_files/stage2')
+# this is what I need#
+# GC#
+gc.h <- confl.gc[2]#
+gc.m <- confl.gc[1]#
+gc.l <-  confl.gc[3]#
+# Not GC#
+ngc.h <- confl.ngc[2]#
+ngc.m <- confl.ngc[1]#
+ngc.l <-  confl.ngc[3]#
+# Plot Trade Exception FD#
+#
+#pdf("../figures/s2_confl_fd.pdf", height = 5, width = 3.8)#
+par(mar = c(3,5,.4,.4))#
+plot(1,1, type = "n"#
+		, bty = "n"#
+		, xlim = c(0, 3)#
+		, ylim = c(-2000,10000)#
+		, xaxt = "n" , yaxt = "n"#
+		, xlab = " "#
+		, ylab = " "#
+		)#
+#axes etc.#
+axis(2, las = 1)#
+mtext('Expected Duration Difference (days)', 2, line = 4)#
+abline(h=0, col = "grey", lwd = 2, lty = 2)		#
+lines(c(2,2), c(ngc.h, ngc.l), lwd = 3, col = "black")#
+lines(c(1,1), c(gc.h, gc.l), lwd = 3, col = "black")#
+points(c(1,2),c(gc.m, ngc.m), pch = 16, col =  "black", cex = 1.8)#
+mtext(at = c(1,2)#
+	,text = c("Government \n Cooperation"#
+			, "Other \n Policies")#
+	, side = 1, line = 1, cex = .95#
+)
